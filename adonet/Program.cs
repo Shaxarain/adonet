@@ -10,7 +10,7 @@ namespace adonet
 {
     class Program
     {
-        public static void contracts()
+        public static void ADOcontracts()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string sql = "SELECT iden.IIN, con.FromDate, con.Type, ib.Money FROM [Identity] as iden JOIN Clients as cl ON cl.IDIdentity = iden.ID JOIN Contracts as con ON cl.IDContract = con.ID JOIN IBAN as ib ON con.IDIBAN = ib.ID; ";
@@ -37,7 +37,11 @@ namespace adonet
         }
         static void Main(string[] args)
         {
-            contracts();
+            using (Products db = new Products())
+            {
+                foreach (Product u in db.Product)
+                    Console.WriteLine("{0} - {1}", u.ProductNumber, u.Name);
+            }
             Console.ReadKey();
         }
     }
