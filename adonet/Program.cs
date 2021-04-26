@@ -5,6 +5,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lib.Production;
+using Lib.Persons;
+using Lib.Sales;
 
 namespace adonet
 {
@@ -37,12 +40,40 @@ namespace adonet
         }
         static void Main(string[] args)
         {
-            using (Products db = new Products())
+/*            using (Prod db = new Prod())
             {
                 foreach (Product u in db.Product)
                     Console.WriteLine("{0} - {1}", u.ProductNumber, u.Name);
+            }*/
+            Repository<Address> AdPer = new Repository<Address>(new Persons());
+            Repository<BusinessEntity> BusPer = new Repository<BusinessEntity>(new Persons());
+            Repository<BusinessEntityAddress> BusAdPer = new Repository<BusinessEntityAddress>(new Persons());
+            Repository<PersonPhone> PhRep = new Repository<PersonPhone>(new Persons());
+            Repository<StateProvince> StPer = new Repository<StateProvince>(new Persons());
+
+            Repository<Customer> CusSal = new Repository<Customer>(new Sales());
+            Repository<SalesPerson> SPSal = new Repository<SalesPerson>(new Sales());
+            Repository<SalesOrderHeader> SOHSal = new Repository<SalesOrderHeader>(new Sales());
+            Repository<SalesOrderDetail> SODSal = new Repository<SalesOrderDetail>(new Sales());
+            Repository<ShoppingCartItem> SCISal = new Repository<ShoppingCartItem>(new Sales());
+            Repository<SalesTerritory> STerSal = new Repository<SalesTerritory>(new Sales());
+
+            Repository<Product> Pr = new Repository<Product>(new Prod());
+            Repository<ProductCategory> CatPr = new Repository<ProductCategory>(new Prod());
+            Repository<ProductDescription> DesPrl = new Repository<ProductDescription>(new Prod());
+            Repository<ProductInventory> InvPr = new Repository<ProductInventory>(new Prod());
+            Repository<ProductListPriceHistory> LPHProd = new Repository<ProductListPriceHistory>(new Prod());
+            Repository<ProductPhoto> PhPr = new Repository<ProductPhoto>(new Prod());
+            Repository<ProductProductPhoto> PhPrPr = new Repository<ProductProductPhoto>(new Prod());
+
+            IEnumerable<Product> prod = Pr.Get();
+            foreach (Product p in prod)
+            {
+                Console.WriteLine($"{p.Name} ({p.Color}) - {p.Size}");
             }
+
             Console.ReadKey();
+
         }
     }
 }
